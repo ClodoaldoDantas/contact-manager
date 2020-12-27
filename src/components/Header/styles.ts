@@ -37,6 +37,7 @@ export const Dropdown = styled.div<DropdownProps>`
   position: absolute;
   top: 8.5rem;
   right: 1.5rem;
+  z-index: 999;
 
   width: 25.6rem;
   background-color: var(--bg-color-medium);
