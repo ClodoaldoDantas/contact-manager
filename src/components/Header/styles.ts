@@ -10,6 +10,7 @@ export const Container = styled.div`
   justify-content: space-between;
 
   strong {
+    font-weight: 600;
     cursor: pointer;
   }
 `;
@@ -18,6 +19,10 @@ export const Logo = styled.div`
   display: flex;
   align-items: center;
   color: #fff;
+
+  h3 {
+    font-weight: 600;
+  }
 
   svg {
     margin-right: 0.5rem;

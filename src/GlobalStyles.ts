@@ -33,13 +33,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body, input, button {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
   }
 
   body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    -webkit-font-smoothing: antialiased !important;
   }
 `;

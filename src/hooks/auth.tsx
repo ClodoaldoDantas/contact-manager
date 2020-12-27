@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { firebaseAuth } from '../services/firebase';
-import { getErrorMessage } from '../utils/getErrorMessage';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { firebaseAuth } from "../services/firebase";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 interface User {
   uid: string;
@@ -11,7 +11,7 @@ interface User {
 
 interface AuthContextState {
   error: string | null;
-  user: User | null;
+  user: User;
   loading: boolean;
   register: (name: string, email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
@@ -21,14 +21,14 @@ interface AuthContextState {
 const AuthContext = createContext({} as AuthContextState);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>({} as User);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const history = useHistory();
 
   useEffect(() => {
-    firebaseAuth.onAuthStateChanged(user => {
+    firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
         setUser({
           uid: user.uid,
@@ -36,7 +36,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           displayName: user.displayName,
         });
       } else {
-        setUser(null);
+        setUser({} as User);
       }
     });
   }, []);
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       );
 
       await result.user?.updateProfile({ displayName: name });
-      history.replace('/dashboard');
+      history.replace("/dashboard");
     } catch (error) {
       console.log(error);
       const message = getErrorMessage(error);
@@ -68,7 +68,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     try {
       await firebaseAuth.signInWithEmailAndPassword(email, password);
-      history.replace('/dashboard');
+      history.replace("/dashboard");
     } catch (error) {
       const message = getErrorMessage(error);
       setError(message);
@@ -79,7 +79,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const logout = async () => {
     firebaseAuth.signOut();
-    history.replace('/');
+    history.replace("/");
   };
 
   return (

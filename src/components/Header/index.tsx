@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import {
   MdPermContactCalendar,
@@ -13,14 +13,17 @@ import { Container, Logo, Dropdown } from "./styles";
 const Header: React.FC = () => {
   const { user, logout } = useAuth();
   const [show, setShow] = useState(false);
+
+  const { pathname } = useLocation();
   const history = useHistory();
 
   const handleNavigateToProfile = () => {
-    setShow(false);
     history.push("/dashboard/profile");
   };
 
   const toggleDropdown = () => setShow(!show);
+
+  useEffect(() => setShow(false), [pathname]);
 
   return (
     <Container>
