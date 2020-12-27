@@ -11,7 +11,7 @@ interface User {
 
 interface AuthContextState {
   error: string | null;
-  user: User;
+  user: User | null;
   loading: boolean;
   register: (name: string, email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
@@ -21,7 +21,7 @@ interface AuthContextState {
 const AuthContext = createContext({} as AuthContextState);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User | null>({} as User);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +36,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           displayName: user.displayName,
         });
       } else {
-        setUser({} as User);
+        setUser(null);
       }
     });
   }, []);

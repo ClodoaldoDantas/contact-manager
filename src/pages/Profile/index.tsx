@@ -13,13 +13,13 @@ const Profile: React.FC = () => {
       <div>
         <MdAccountCircle color="var(--primary)" size={20} />
         <strong>Nome do usuário:</strong>
-        <span>{user.displayName}</span>
+        <span>{user?.displayName}</span>
       </div>
 
       <div>
         <MdEmail color="var(--primary)" size={20} />
         <strong>E-mail:</strong>
-        <span>{user.email}</span>
+        <span>{user?.email}</span>
       </div>
 
       <button onClick={history.goBack}>

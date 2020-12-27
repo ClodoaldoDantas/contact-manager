@@ -40,6 +40,7 @@ export const Dropdown = styled.div<DropdownProps>`
 
   width: 25.6rem;
   background-color: var(--bg-color-medium);
+  box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 20px;
   border-radius: 0.5rem;
 
   opacity: 0;
