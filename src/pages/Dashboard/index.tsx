@@ -1,18 +1,11 @@
-import React from 'react';
-import Button from '../../components/Button';
-import { useAuth } from '../../hooks/auth';
-import { Container } from './styles';
+import React from "react";
+import Header from "../../components/Header";
 
 const Dashboard: React.FC = () => {
-  const { user, logout } = useAuth();
-
   return (
-    <Container>
-      <h1 style={{ marginBottom: 10 }}>
-        Olá, {user?.displayName || user?.email}
-      </h1>
-      <Button onClick={logout}>Sair</Button>
-    </Container>
+    <main>
+      <Header />
+    </main>
   );
 };
 

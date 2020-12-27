@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   html {
@@ -40,5 +40,6 @@ export const GlobalStyles = createGlobalStyle`
   body {
     background-color: var(--bg-color);
     color: var(--text-color);
+    -webkit-font-smoothing: antialiased !important;
   }
 `;
