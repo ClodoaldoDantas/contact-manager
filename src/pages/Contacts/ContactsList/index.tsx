@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import Card from "../../../components/Card";
 import formatWhatsapp from "../../../utils/formatWhatsapp";
 import { firebaseStore } from "../../../services/firebase";
-import { AnimationContainer, List, ListItem } from "./styles";
+import { LoadingContainer, List, ListItem } from "./styles";
 import { MdEmail } from "react-icons/md";
 import { IoLogoWhatsapp } from "react-icons/io5";
 import { useAuth } from "../../../hooks/auth";
-
-import Lottie from "react-lottie";
-import animationData from "../../../assets/animation.json";
 
 interface Contact {
   id: string;
@@ -18,49 +15,39 @@ interface Contact {
   whatsapp: string;
 }
 
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-};
-
 const ContactsList: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const { user } = useAuth();
 
   useEffect(() => {
-    const getContacts = async () => {
-      const userId = user && user.uid ? user.uid : "";
+    const userId = user && user.uid ? user.uid : "";
 
-      const querySnapshot = await firebaseStore
-        .collection("contacts")
-        .where("user_id", "==", userId)
-        .get();
+    firebaseStore
+      .collection("contacts")
+      .where("user_id", "==", userId)
+      .onSnapshot((querySnapshot) => {
+        const data: Contact[] = [];
 
-      const data: Contact[] = [];
-
-      querySnapshot.forEach((doc) => {
-        data.push({
-          id: doc.id,
-          name: doc.data().name,
-          email: doc.data().email,
-          whatsapp: doc.data().whatsapp,
-          avatar: doc.data().avatar,
+        querySnapshot.forEach((doc) => {
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            email: doc.data().email,
+            whatsapp: doc.data().whatsapp,
+            avatar: doc.data().avatar,
+          });
         });
+
+        setContacts(data);
       });
-
-      setContacts(data);
-    };
-
-    getContacts();
   }, [user]);
 
   return (
     <Card>
       {contacts.length === 0 ? (
-        <AnimationContainer>
-          <Lottie options={defaultOptions} height={300} width={300} />
-        </AnimationContainer>
+        <LoadingContainer>
+          <h3>Carregando Lista ...</h3>
+        </LoadingContainer>
       ) : (
         <List>
           {contacts.map((contact) => (
